@@ -1,0 +1,8 @@
+- hosts: target_servers
+  tasks:
+  - name: Test Task
+    file:
+      path: /home/ansible/test.conf
+      owner: ansible
+      group: ansible
+      mode: 600
