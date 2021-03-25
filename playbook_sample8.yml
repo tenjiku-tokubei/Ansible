@@ -1,0 +1,5 @@
+- hosts: target_servers
+  become: yes
+  become_method: sudo
+  tasks:
+    - include: tasks/included.yml

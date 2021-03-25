@@ -1,0 +1,10 @@
+- name: General packages are installed
+  yum:
+          name: "{{ packages }}"
+          state: present
+  vars:
+          packages:
+          - tar
+          - wget
+          - unzip
+  tags: General_Packages

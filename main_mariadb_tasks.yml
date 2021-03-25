@@ -1,0 +1,28 @@
+- name: mariadb is installed
+  dnf:
+          name: "{{ mariadb_package }}"
+          state: present
+  tags: install_mariadb
+
+- name: mariadb is running and enabled
+  service:
+          name: mariadb
+          state: started
+          enabled: yes
+
+- name: Set Mariadb root password
+  mysql_user:
+          name: "root"
+          password: "{{ mariabd_root_password }}"
+          host: "{{ item }}"
+  with_items:
+          - "127.0.0.1"
+          - "::1"
+          - "localhost"
+
+- name: Delete user
+  mysql_user:
+          user: "root"
+          login_password: "{{ mariadb_root_password }}"
+          host: "{{ ansible_fqdn }}"
+          state: "absent"
