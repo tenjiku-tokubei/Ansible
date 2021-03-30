@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+          - name: add user
+            user: name={{ item.name }} groups={{ item.groups }}
+            with_items:
+                    - { name: 'user1', group: 'wheel' }
+                    - { name: 'user2', group: 'root' }

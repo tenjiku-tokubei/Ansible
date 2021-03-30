@@ -1,0 +1,57 @@
+---
+- name: wordpress
+  hosts: all
+  become: yes
+  become_method: sudo
+  remote_user: user
+  vars:
+          wordpress_url: https://ja.wordpress.org/wordpress-4.4.2-ja.tar
+
+  tasks:
+    - name: apache no install
+      yum: name=httpd state=latest
+
+- name: firewalld de HTTP wo kyoka
+  firewalld: permanent=True service=http state=enabled immediate=true
+
+    - name:
+      service: name=httpd state=started enabled=yes
+
+    - name: PHP no install
+      yum: name="{{item}}" state=latest
+      with_items:
+              - php
+              - php-mysql
+
+    - name: Time Zone no settei
+      ini_file: >
+            dest=/etc/php.ini
+            section=Date
+            option=date.timezone
+            value='"Asia/Tokyo"'
+
+    - name: php test page no sakusei
+      copy: >
+              src=phpinfo.php
+              dest=/var/www/html/phpinfo.php
+
+    - name: http service no reboot
+      service: name=httpd state=restarted enabled=yes
+
+    - name: MariaDB install
+      yum: name="{{item}}" state=latest
+      with_items:
+              - mariadb
+              - mariadb-server
+              - MySQL-python
+
+    - name: service no kidou
+      service: name=mariadb state=started enable=yes
+
+    - name: wordpress no download
+      get_url:
+        url="{{wordpress_url}}"
+        dest=/tmp/wordpress.tar.gz
+
+    - name: wordpress no tenkai
+      unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/html/ copy=no

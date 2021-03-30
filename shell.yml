@@ -1,0 +1,6 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: ruby no tenkai
+      unarchive: src=/tmp/ruby.tar.gz dest=/tmp copy=no

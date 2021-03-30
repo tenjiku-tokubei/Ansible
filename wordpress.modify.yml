@@ -1,0 +1,45 @@
+- name: wordpress kankyou kouchiku
+  hosts: all
+  become: yes
+  become_method: sudo
+  remote_user: user
+  vars:
+    wordpress_url: https://ja.wordpress.org/wordpress-4.4.2-ja.tar.gz
+
+  tasks:
+  - name: hitsuyou package no yum install
+    yum: name="{{item}}" state=latest
+    with_items:
+            - php
+            - php-mysql
+            - httpd
+            - mariadb
+            - mariadb-server
+            - MySQL-python
+
+  - name: firewalld de http wo kyoka
+    firewalld: permanent=TRUE service=http state=enabled immediate=true
+
+  - name: wordpress no download
+    get_url:
+            url="{{wordpress_rul}}"
+            dest=/tmp/wordpress.tar.gz
+
+   - name: time zone no settei
+     ini_file: >
+             dest=/etc/php.ini
+             section=Date
+             option=date.timezone
+             value="Asia/Tokyo"
+
+    - name: wordpress no tenkai
+      unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/html/ copy=no
+
+    - name: wordpress no shoyusha wo apache ni henkou
+      file: path=/var/www/html/wordpress/ owner=apache group=apache recurse=yes
+
+    - name: kakushu service no reboot
+      service: name="{{item}}" state=started enabled=yes
+      with_items:
+              - mariadb
+              - httpd

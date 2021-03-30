@@ -1,0 +1,8 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+          - name: rubydownload
+            get_url:
+                    url={{ rubyurl }}
+                    dest=/tmp/ruby.tar.gz

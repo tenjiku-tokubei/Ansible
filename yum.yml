@@ -1,0 +1,6 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+          - name: sl command no install
+            yum: name=sl

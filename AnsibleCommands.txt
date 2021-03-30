@@ -1,0 +1,3 @@
+ansible-playbook yum.yml --ask-become-pass --check
+ansible-doc ### -> ansible-doc ping
+
