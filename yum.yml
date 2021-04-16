@@ -4,3 +4,4 @@
   tasks:
           - name: sl command no install
             yum: name=sl
+

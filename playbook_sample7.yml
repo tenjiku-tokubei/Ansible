@@ -10,3 +10,4 @@
       regexp: '^PermitRootLogin'
     notify: restart sshd
     tags: Edit_sshd_config
+

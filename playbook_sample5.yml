@@ -11,3 +11,4 @@
   - name: put index.html
     shell: echo "httpd index" > /var/www/html/index.html
     when: file_exists.rc == 1
+ 

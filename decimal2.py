@@ -1,0 +1,5 @@
+print(1.2)
+print(3.)
+print(.6)
+print(2e2)
+print(3.2E3)

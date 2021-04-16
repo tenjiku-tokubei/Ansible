@@ -1,0 +1,11 @@
+- hosts: all
+  become: yes
+  become_method: sudo
+  tasks:
+          - name: Assign command output as variable
+            shell: find /opt -type f -name "*.dat"
+            register: command_result
+
+          - name: Change permission each "*.dat" files
+            file: path={{ item }} mode=600
+            with_items: "{{ command_result.stdout_lines }}"

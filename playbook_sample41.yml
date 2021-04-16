@@ -4,3 +4,4 @@
     command: echo "{{ ansible_distribution }} {{ ansible_distribution_version }}"
     register: dist
   - debug: msg="{{ dist.stdout }}"
+

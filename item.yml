@@ -7,3 +7,4 @@
             with_items:
                     - { name: 'user1', group: 'wheel' }
                     - { name: 'user2', group: 'root' }
+

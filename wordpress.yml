@@ -6,7 +6,7 @@
   remote_user: user
   vars:
           wordpress_url: https://ja.wordpress.org/wordpress-4.4.2-ja.tar
-
+  
   tasks:
     - name: apache no install
       yum: name=httpd state=latest
@@ -29,7 +29,7 @@
             section=Date
             option=date.timezone
             value='"Asia/Tokyo"'
-
+      
     - name: php test page no sakusei
       copy: >
               src=phpinfo.php
@@ -55,3 +55,10 @@
 
     - name: wordpress no tenkai
       unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/html/ copy=no
+
+    - name: wordpress no shoyusha wo apache ni henkou
+      file: path=/var/www/html/wordpress/ owner=apache group=apache recurse=yes
+
+    - name: http service no saikidou
+      service: name=httpd state=restarted
+
